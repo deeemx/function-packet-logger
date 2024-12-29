@@ -41,7 +41,7 @@ public:
             std::cerr << formattedMessage << std::endl;
         }
     }
-
+//this broke
     void setLogLevel(Level level) {
         std::lock_guard<std::mutex> guard(logMutex);
         currentLevel = level;
