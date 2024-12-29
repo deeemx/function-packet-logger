@@ -1,4 +1,4 @@
-# function-logger 
+# function-packet-logger 
 Run !EX HELP! for more info
 download and inject
 
