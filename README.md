@@ -3,7 +3,7 @@ Run !EX HELP! for more info
 download and inject
 
 
-
+Logs all client sent packets in the .txt downloaded
 
 
 
