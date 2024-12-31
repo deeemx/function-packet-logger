@@ -9,7 +9,9 @@ Logs all client sent packets in the .txt downloaded
 
 if there are any bugs dm .d.m.x. on Discord 
 
-packet logger currently broken and in beta 
+Packet logger broken 
+vers 1.18.12
+vers 1.21.5
 
 
 Change logs
