@@ -1,1 +1,2 @@
 example includes logging levels and thread safety using std::mutex
+logging inside there
