@@ -13,7 +13,7 @@ public:
         ERROR,
         DEBUG
     };
-
+// logging in vsc
     static Logger& getInstance() {
         static Logger instance;
         return instance;
