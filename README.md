@@ -4,14 +4,14 @@ download and inject
 
 
 Logs all client sent packets in the .txt downloaded
-
+USING std::mutex
 
 
 if there are any bugs dm .d.m.x. on Discord 
 
 Packet logger broken 
-vers 1.18.12
-vers 1.21.5
+
+vers 1.21
 
 
 Change logs
