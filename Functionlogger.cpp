@@ -29,7 +29,7 @@ public:
             std::cerr << "Could not open log file: " << filename << std::endl;
         }
     }
-
+// paste exel function
     void log(Level level, const std::string& message) {
         std::lock_guard<std::mutex> guard(logMutex);
         if (level < currentLevel) return;
