@@ -14,7 +14,4 @@ Packet logger broken
 vers 1.21
 
 
-Change logs
-beta v1 
-
-running into ex.
+Added exel function
