@@ -5,75 +5,53 @@
 #include <ctime>
 #include <map>
 
-class Logger {
+class L {
 public:
-    enum class Level {
-        INFO,
-        WARNING,
-        ERROR,
-        DEBUG
-    };
-// logging in vsc
-    static Logger& getInstance() {
-        static Logger instance;
-        return instance;
+    enum class LV { I, W, E, D };
+
+    static L& G() {
+        static L x;
+        return x;
     }
 
-    void setLogFile(const std::string& filename) {
-        std::lock_guard<std::mutex> guard(logMutex);
-        if (logFile.is_open()) {
-            logFile.close();
-        }
-        logFile.open(filename, std::ios::app);
-        if (!logFile) {
-            std::cerr << "Could not open log file: " << filename << std::endl;
-        }
+    void F(const std::string& f) {
+        std::lock_guard<std::mutex> g(m);
+        if (s.is_open()) s.close();
+        s.open(f, std::ios::app);
+        if (!s) std::cerr << "Can't open: " << f << std::endl;
     }
-// paste exel function
-    void log(Level level, const std::string& message) {
-        std::lock_guard<std::mutex> guard(logMutex);
-        if (level < currentLevel) return;
 
-        std::string formattedMessage = format(level, message);
-        if (logFile.is_open()) {
-            logFile << formattedMessage << "\n";
-        } else {
-            std::cerr << formattedMessage << std::endl;
-        }
+    void Lg(LV l, const std::string& msg) {
+        std::lock_guard<std::mutex> g(m);
+        if (l < c) return;
+        std::string z = T(l, msg);
+        if (s.is_open()) s << z << "\n";
+        else std::cerr << z << std::endl;
     }
-//this broke
-    void setLogLevel(Level level) {
-        std::lock_guard<std::mutex> guard(logMutex);
-        currentLevel = level;
+
+    void S(LV l) {
+        std::lock_guard<std::mutex> g(m);
+        c = l;
     }
 
 private:
-    std::ofstream logFile;
-    Level currentLevel = Level::INFO;
-    std::mutex logMutex;
+    std::ofstream s;
+    LV c = LV::I;
+    std::mutex m;
 
-    Logger() = default;
-    ~Logger() {
-        if (logFile.is_open()) {
-            logFile.close();
-        }
-    }
+    L() = default;
+    ~L() { if (s.is_open()) s.close(); }
+    L(const L&) = delete;
+    L& operator=(const L&) = delete;
 
-    Logger(const Logger&) = delete;
-    Logger& operator=(const Logger&) = delete;
-
-    std::string format(Level level, const std::string& message) {
-        const static std::map<Level, std::string> levelNames = {
-            {Level::INFO, "INFO"},
-            {Level::WARNING, "WARNING"},
-            {Level::ERROR, "ERROR"},
-            {Level::DEBUG, "DEBUG"}
+    std::string T(LV l, const std::string& msg) {
+        static const std::map<LV, std::string> n = {
+            {LV::I, "INFO"}, {LV::W, "WARNING"},
+            {LV::E, "ERROR"}, {LV::D, "DEBUG"}
         };
-
-        time_t now = std::time(nullptr);
-        char timestamp[20];
-        std::strftime(timestamp, sizeof(timestamp), "%Y-%m-%d %H:%M:%S", std::localtime(&now));
-
-        return "[" + std::string(timestamp) + "] [" + levelNames.at(level) + "] " + message;
+        time_t t = std::time(nullptr);
+        char ts[20];
+        std::strftime(ts, sizeof(ts), "%Y-%m-%d %H:%M:%S", std::localtime(&t));
+        return "[" + std::string(ts) + "] [" + n.at(l) + "] " + msg;
     }
 };
