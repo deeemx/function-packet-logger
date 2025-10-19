@@ -2,15 +2,9 @@
 
 
 
- .txt downloaded
-USING std::mutex
+thread safe and centralized logging
+USING std::mutex 
+automatic timestamps per log
 
 
-if there are any bugs dm .d.m.x. on Discord 
 
-Packet logger broken 
-
-vers 1.21
-
-
-Added exel function
